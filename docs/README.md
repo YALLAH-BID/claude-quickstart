@@ -10,6 +10,8 @@ to cause.
   touches, and the behaviours it depends on
 - [contributing.md](contributing.md) — how the code is arranged, what CI does and
   does not prove, and how to verify a change by hand
+- [faq.md](faq.md) — production readiness, cost, swapping the model, and why the
+  repository dwarfs the script
 - [pause-turn.md](pause-turn.md) — paused turns, how resuming works, and the one
   question about this code nobody has answered
 - [troubleshooting.md](troubleshooting.md) — indexed by the message you actually
