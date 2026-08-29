@@ -1,0 +1,70 @@
+name: Dependabot auto-merge
+
+# Runs after CI finishes, not alongside it. GitHub's native auto-merge would
+# land the PR as soon as all *required* checks pass -- and this repo has no
+# required checks, so that would mean merging without waiting for CI at all.
+# Gating on a completed, successful CI run avoids needing branch protection.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    # Three conditions, all necessary: CI actually passed, it ran for a pull
+    # request, and Dependabot opened it.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge if it is a safe bump
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          # workflow_run does not carry the PR number reliably, so resolve it
+          # from the commit that CI ran against.
+          num=$(gh api "repos/$REPO/commits/$HEAD_SHA/pulls" --jq '.[0].number // empty')
+          if [ -z "$num" ]; then
+            echo "No pull request found for $HEAD_SHA — nothing to do."
+            exit 0
+          fi
+
+          # Re-check the author against the PR itself. The `if:` above reads
+          # event metadata; this reads the PR, so a workflow_run that somehow
+          # arrives mislabelled still cannot merge someone else's branch.
+          author=$(gh api "repos/$REPO/pulls/$num" --jq .user.login)
+          if [ "$author" != "dependabot[bot]" ]; then
+            echo "PR #$num was opened by $author, not Dependabot — refusing."
+            exit 0
+          fi
+
+          # Major bumps are left for a human. Dependabot titles read
+          # "Bump <dep> from X.Y.Z to A.B.C"; if the major component moves, or
+          # the title does not parse, do nothing. Failing closed is the point.
+          title=$(gh api "repos/$REPO/pulls/$num" --jq .title)
+          from=$(printf '%s' "$title" | sed -n 's/.* from \([0-9][^ ]*\) to .*/\1/p')
+          to=$(printf '%s' "$title" | sed -n 's/.* to \([0-9][^ ]*\).*/\1/p')
+
+          if [ -z "$from" ] || [ -z "$to" ]; then
+            echo "Could not read versions from: $title"
+            echo "Leaving #$num for review."
+            exit 0
+          fi
+
+          if [ "${from%%.*}" != "${to%%.*}" ]; then
+            echo "Major bump ${from} -> ${to}. Leaving #$num for review."
+            exit 0
+          fi
+
+          echo "Merging #$num: $title"
+          gh pr merge "$num" --squash --delete-branch --repo "$REPO"
