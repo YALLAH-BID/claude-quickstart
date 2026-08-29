@@ -16,7 +16,9 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - run: pip install ruff
+      # Pinned: an unpinned ruff can change formatting rules in a new release
+      # and turn main red with no code change. Keep in sync with CONTRIBUTING.md.
+      - run: pip install ruff==0.16.5
       - run: ruff check .
       - run: ruff format --check .
 
