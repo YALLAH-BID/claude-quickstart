@@ -12,6 +12,8 @@ to cause.
   does not prove, and how to verify a change by hand
 - [pause-turn.md](pause-turn.md) — paused turns, how resuming works, and the one
   question about this code nobody has answered
+- [troubleshooting.md](troubleshooting.md) — indexed by the message you actually
+  saw, including the ones that are not errors
 
 ## Everywhere else
 
