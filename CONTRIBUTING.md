@@ -40,6 +40,9 @@ example shouldn't have to install a linter.
 
 ## Before you push
 
+If your change alters what someone running the example sees, add a CHANGELOG.md entry
+under Unreleased. Scaffolding changes do not need one.
+
 CI runs exactly these, so running them locally first saves a round trip:
 
 ```bash
