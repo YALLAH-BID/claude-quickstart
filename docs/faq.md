@@ -23,15 +23,18 @@ it.
 
 ## What is tested?
 
-`merge_blocks` and `collect`. `field` and `block_key` are exercised through both.
+Everything except `main`. `merge_blocks`, `collect` and `run` are tested directly;
+`field`, `block_key` and `request` are exercised through them.
 
-Those two are where the logic lives. `merge_blocks` is pure and carries the branch
-that has never run against a live paused turn; `collect` handles the two shapes a
-search result can arrive in, including the error shape that comes back as HTTP 200.
+`merge_blocks` is pure and carries the branch that has never run against a live
+paused turn. `collect` handles the two shapes a search result can arrive in,
+including the error shape that comes back as HTTP 200. `run` is tested against a
+fake client that returns a scripted sequence of responses — a fake rather than a
+mock, since the tests assert on the requests actually sent, not that a mock
+returned what it was told to.
 
-`request`, `run` and `main` are not tested. They are thin wrappers around the
-client, so tests would mostly assert that mocks return what the mocks were told to
-return.
+`main` is untested. It is the entry point: it interprets `stop_reason`, prints,
+and exits.
 
 Note what the tests do and do not settle. They establish that both resume shapes
 are handled correctly. They cannot tell you **which** shape the API actually

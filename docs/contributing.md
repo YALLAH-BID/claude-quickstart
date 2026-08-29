@@ -32,16 +32,16 @@ belongs somewhere else.
 The lint job runs `ruff`. The test job installs dependencies and runs `pytest` on
 three Python versions.
 
-`merge_blocks` and `collect` are covered — both resume shapes, and the HTTP-200
-search-error path. `field` and `block_key` run through them.
+`merge_blocks`, `collect` and `run` are covered — both resume shapes, the HTTP-200
+search-error path, and the continuation cap. `field`, `block_key` and `request`
+are exercised through them.
 
-**`request`, `run` and `main` are never executed by CI.** They need a client, and
-importing the module runs the constants and stops, because `main()` sits behind
-`if __name__ == "__main__"`.
+**`main` is the only function CI never executes**, since it sits behind
+`if __name__ == "__main__"` and importing the module runs the constants and stops.
 
-So a green tick means the file parses, is formatted, imports resolve, and the two
-functions carrying real logic behave. For the request path, the badge is still not
-evidence.
+So a green tick now means rather more than it did: the logic behaves, on three
+Python versions. What it still cannot tell you is whether any of it works against
+the real API — every test runs on a fake client, and none of them spend money.
 
 ## Verifying by hand
 
@@ -64,7 +64,8 @@ Three paths are difficult or impossible to reach deliberately:
 - **Which resume shape the API sends** — the unit tests cover both, but
   establishing which one actually occurs needs a genuine pause, and there is no
   supported way to force one; see [pause-turn.md](pause-turn.md).
-- **The `MAX_CONTINUATIONS` cap** — needs five consecutive pauses.
+- **The `MAX_CONTINUATIONS` cap against the real API** — the loop is tested with
+  a fake client, but observing it genuinely needs five consecutive pauses.
 - **`stop_reason == "refusal"`** — needs a query the model declines, which is
   not something to go fishing for.
 
