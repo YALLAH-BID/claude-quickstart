@@ -21,19 +21,20 @@ Because it is one file you are meant to read, and packaging invites you not to.
 configuration only. Copy the file into your own project rather than depending on
 it.
 
-## Why are there no tests?
+## What is tested?
 
-There is nothing to unit-test that would not be testing a mock. Every function
-except `merge_blocks` is either a small accessor or a thin wrapper over the API,
-so a test suite would mostly assert that mocks return what the mocks were told
-to return.
+`merge_blocks`, and only `merge_blocks`. It is the one function worth unit-testing
+here: pure, two sequences in and a list out, and it carries the branch that has
+never run against a live paused turn.
 
-`merge_blocks` is the exception and genuinely could be tested — it is pure, takes
-two lists, returns a list. That it is not is a fair criticism.
+Nothing else is tested. Every other function is a small accessor or a thin wrapper
+over the API, so tests would mostly assert that mocks return what the mocks were
+told to return.
 
-CI runs lint plus an import check, and
-[contributing.md](contributing.md) is explicit that this proves the file parses
-and imports, nothing more.
+Note what the tests do and do not settle. They establish that both resume shapes
+are handled correctly. They cannot tell you **which** shape the API actually
+sends — only a live paused turn does that, and it remains
+[the open question](pause-turn.md).
 
 ## What does one run cost?
 

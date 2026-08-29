@@ -22,9 +22,9 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
 
-  # Verifies the README's "Python 3.10+" claim, and that requirements.txt
-  # still resolves, across the supported range.
-  smoke:
+  # Verifies the README's "Python 3.10+" claim, that requirements.txt still
+  # resolves, and that merge_blocks behaves on every supported version.
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -35,10 +35,10 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
 
-      # Importing runs the module body but not main(), which is guarded by
-      # __name__ == "__main__". So this needs no credentials and makes no
-      # API call -- CI never spends money. Actually running quickstart.py
-      # is deliberately not a CI step for that reason.
-      - run: python -c "import quickstart"
+      # The tests import quickstart, which runs the module body but not
+      # main() -- that is guarded by __name__ == "__main__". So they need no
+      # credentials and make no API call; CI still never spends money.
+      # Actually running quickstart.py is deliberately not a CI step.
+      - run: pytest -q

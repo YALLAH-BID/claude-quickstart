@@ -29,15 +29,16 @@ belongs somewhere else.
 
 ## What CI actually proves
 
-The lint job runs `ruff`. The smoke job installs dependencies and does
-`import quickstart` on three Python versions.
+The lint job runs `ruff`. The test job installs dependencies and runs `pytest` on
+three Python versions.
 
-That is the whole of it. Importing executes the module body — the constants —
-and stops, because `main()` sits behind `if __name__ == "__main__"`. **No
-function in the table above is called by CI.** A green tick means the file
-parses, is formatted consistently, and its imports resolve.
+`merge_blocks` is covered, both branches. **Nothing else in the table above is
+executed by CI** — importing the module runs the constants and stops, because
+`main()` sits behind `if __name__ == "__main__"`.
 
-So for anything touching behaviour, the badge is not evidence.
+So a green tick means the file parses, is formatted, imports resolve, and
+`merge_blocks` handles either resume shape. For anything else touching behaviour,
+the badge is still not evidence.
 
 ## Verifying by hand
 
@@ -57,7 +58,8 @@ The PR template asks for exactly this.
 
 Three paths are difficult or impossible to reach deliberately:
 
-- **`merge_blocks` when a turn is resumed** — needs a genuine pause. No
+- **Which resume shape the API sends** — the unit tests cover both, but
+  establishing which one actually occurs needs a genuine pause, and there is no
   supported way to force one; see [pause-turn.md](pause-turn.md).
 - **The `MAX_CONTINUATIONS` cap** — needs five consecutive pauses.
 - **`stop_reason == "refusal"`** — needs a query the model declines, which is

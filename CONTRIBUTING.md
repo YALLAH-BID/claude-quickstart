@@ -51,11 +51,11 @@ CI runs exactly these, so running them locally first saves a round trip:
 ```bash
 ruff check .
 ruff format --check .
-python -c "import quickstart"
+pytest
 ```
 
-The import is a real check, not a formality: it catches syntax and import errors
-without making an API call, because `main()` is guarded by `__name__ == "__main__"`.
+The tests cover `merge_blocks` only, and make no API call — `main()` is guarded by
+`__name__ == "__main__"`, so importing the module runs nothing.
 
 CI runs the lint on 3.12 and the import on Python 3.10, 3.12, and 3.14.
 

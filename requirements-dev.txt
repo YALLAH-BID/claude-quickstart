@@ -9,3 +9,6 @@ ruff==0.16.5
 # Also installed in CI (a few wasted seconds) so this file stays the single
 # list of dev tooling rather than splitting across two.
 pre-commit==4.6.2
+
+# Test runner. Only merge_blocks is unit-tested; see docs/faq.md.
+pytest==9.1.1
