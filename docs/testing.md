@@ -42,6 +42,12 @@ about test setup.
 The fake also raises if `run()` asks for more responses than were scripted, so a
 runaway loop fails a test instead of hanging CI.
 
+The reason a fake this small is enough: the program has exactly one network seam.
+`request` is the only function that touches the wire, so substituting a client at
+that single point puts the entire continuation loop under test — which is why
+there is no HTTP mocking library here and no recorded fixtures. See
+[contributing.md](contributing.md#the-side-effect-boundary).
+
 ## Mutation testing
 
 Coverage says a line executed. It does not say a test would notice if that line

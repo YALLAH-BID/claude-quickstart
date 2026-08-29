@@ -27,6 +27,41 @@ Then, in dependency order:
 change makes either of them more complicated, that is usually a sign the change
 belongs somewhere else.
 
+### The side-effect boundary
+
+`client` appears in exactly three places: `main` constructs one, `run` passes it
+along, `request` calls it. **There is one network seam in the whole program.**
+Nothing below `request` — `field`, `block_key`, `merge_blocks`, `collect` — knows
+a client exists.
+
+A consequence worth preserving: `merge_blocks`, the most intricate logic here and
+the subject of the repo's [open question](pause-turn.md), is on the pure side. It
+takes two lists and returns one. Folded into `run`, every test of it would have
+needed a client.
+
+`main` owns the other boundary — all six `sys.exit` calls, the client
+construction, and all output but one line. `run` returns `(response, blocks)` and
+lets `main` decide what a `stop_reason` means.
+
+The one leak is [quickstart.py:104](../quickstart.py): `collect` prints the
+`[web_search error: ...]` line rather than returning it, making it the only
+function below the boundary with an effect. The reason is that search failures
+arrive inline among successful results and `collect` is the only place walking
+them; the alternative widens its return signature for a case that ideally never
+fires. Arguable, but deliberate — and it is why testing that one branch needs
+stdout capture when nothing else does.
+
+### `blocks` is the only state
+
+One list, created in `run` and threaded as a plain argument. `response` is
+transient, rebound each iteration. Nothing is stored on a module, a class, or the
+client, so tests need no setup or teardown and cannot contaminate each other. The
+module-level names are constants; nothing writes to them.
+
+Note `blocks` is walked twice for two different purposes: `collect` extracts
+queries and sources, then `main` walks it again for the answer text. `collect`
+does not return the answer.
+
 ## What CI actually proves
 
 The lint job runs `ruff`. The test job runs `pytest --cov` on three Python
