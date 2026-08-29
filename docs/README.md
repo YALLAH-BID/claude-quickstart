@@ -6,6 +6,8 @@ to cause.
 
 ## In this folder
 
+- [architecture.md](architecture.md) — the shape of the file: the loop, the one
+  piece of state, and where the side-effect boundary falls
 - [api-reference.md](api-reference.md) — the Claude API surface this example
   touches, and the behaviours it depends on
 - [contributing.md](contributing.md) — how the code is arranged, what CI does and
