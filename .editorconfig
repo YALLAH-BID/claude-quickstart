@@ -1,0 +1,25 @@
+# Makes the editor do what the hooks and CI already enforce, so a mismatch shows
+# up while typing rather than at commit time. Every value here mirrors an
+# existing rule -- change one and change its counterpart.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf              # .gitattributes: * text=auto eol=lf
+insert_final_newline = true   # pre-commit: end-of-file-fixer
+trim_trailing_whitespace = true   # pre-commit: trailing-whitespace
+indent_style = space
+
+[*.py]
+indent_size = 4
+max_line_length = 88          # pyproject.toml: [tool.ruff] line-length
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+indent_size = 2
+# Deliberately NOT trim_trailing_whitespace = false. Two trailing spaces is a
+# markdown hard line break, but the pre-commit hook strips them repo-wide, so
+# exempting markdown here would just make the editor and the hook disagree.
