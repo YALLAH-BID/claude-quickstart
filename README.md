@@ -1,5 +1,7 @@
 # claude-quickstart
 
+[![CI](https://github.com/YALLAH-BID/claude-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/YALLAH-BID/claude-quickstart/actions/workflows/ci.yml)
+
 A single-file example of the Claude Messages API using the **server-side web search tool**.
 
 `quickstart.py` asks Claude a question that needs current information, lets it search the web
