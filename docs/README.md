@@ -6,6 +6,8 @@ to cause.
 
 ## In this folder
 
+- [api-reference.md](api-reference.md) — the Claude API surface this example
+  touches, and the behaviours it depends on
 - [contributing.md](contributing.md) — how the code is arranged, what CI does and
   does not prove, and how to verify a change by hand
 - [pause-turn.md](pause-turn.md) — paused turns, how resuming works, and the one
