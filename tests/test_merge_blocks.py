@@ -1,4 +1,4 @@
-"""Tests for merge_blocks, the one function here worth unit-testing.
+"""Tests for merge_blocks.
 
 It is pure -- two sequences in, a list out, no client and no I/O -- and it
 carries the branch that has never executed against a live paused turn. Which
@@ -7,25 +7,14 @@ establish that both are handled, which is a different and answerable question.
 """
 
 import pytest
+from conftest import Block
 
 from quickstart import merge_blocks
 
 
-class Block:
-    """Minimal stand-in for an SDK content block.
-
-    block_key() reads .type directly and .id / .text via getattr with a default,
-    so those three attributes are the whole contract.
-    """
-
-    def __init__(self, type, id=None, text=None):  # noqa: A002
-        self.type = type
-        self.id = id
-        self.text = text
-
-
 def keys(blocks):
-    return [(b.type, b.id, b.text) for b in blocks]
+    """Mirrors block_key: .id and .text are optional, read with a default."""
+    return [(b.type, getattr(b, "id", None), getattr(b, "text", None)) for b in blocks]
 
 
 # --- the empty case -------------------------------------------------------

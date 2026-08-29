@@ -32,13 +32,16 @@ belongs somewhere else.
 The lint job runs `ruff`. The test job installs dependencies and runs `pytest` on
 three Python versions.
 
-`merge_blocks` is covered, both branches. **Nothing else in the table above is
-executed by CI** — importing the module runs the constants and stops, because
-`main()` sits behind `if __name__ == "__main__"`.
+`merge_blocks` and `collect` are covered — both resume shapes, and the HTTP-200
+search-error path. `field` and `block_key` run through them.
 
-So a green tick means the file parses, is formatted, imports resolve, and
-`merge_blocks` handles either resume shape. For anything else touching behaviour,
-the badge is still not evidence.
+**`request`, `run` and `main` are never executed by CI.** They need a client, and
+importing the module runs the constants and stops, because `main()` sits behind
+`if __name__ == "__main__"`.
+
+So a green tick means the file parses, is formatted, imports resolve, and the two
+functions carrying real logic behave. For the request path, the badge is still not
+evidence.
 
 ## Verifying by hand
 

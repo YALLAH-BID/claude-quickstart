@@ -23,13 +23,15 @@ it.
 
 ## What is tested?
 
-`merge_blocks`, and only `merge_blocks`. It is the one function worth unit-testing
-here: pure, two sequences in and a list out, and it carries the branch that has
-never run against a live paused turn.
+`merge_blocks` and `collect`. `field` and `block_key` are exercised through both.
 
-Nothing else is tested. Every other function is a small accessor or a thin wrapper
-over the API, so tests would mostly assert that mocks return what the mocks were
-told to return.
+Those two are where the logic lives. `merge_blocks` is pure and carries the branch
+that has never run against a live paused turn; `collect` handles the two shapes a
+search result can arrive in, including the error shape that comes back as HTTP 200.
+
+`request`, `run` and `main` are not tested. They are thin wrappers around the
+client, so tests would mostly assert that mocks return what the mocks were told to
+return.
 
 Note what the tests do and do not settle. They establish that both resume shapes
 are handled correctly. They cannot tell you **which** shape the API actually
