@@ -1,0 +1,10 @@
+# One maintainer, one rule. Per-directory entries would repeat the same owner
+# and drift as the tree changes.
+#
+# What this does today: auto-requests review from the owner on pull requests.
+# What it does not do: block anything. main has no branch protection and no
+# rulesets, so nothing requires code-owner approval to merge. Enabling that
+# would also mean the maintainer's own direct pushes to main stop working
+# without an explicit bypass.
+
+* @YALLAH-BID
