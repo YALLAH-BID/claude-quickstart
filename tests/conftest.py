@@ -18,9 +18,12 @@ class Block:
 class Response:
     """A Messages response, reduced to what run() and main() actually read."""
 
-    def __init__(self, content=(), stop_reason="end_turn"):
+    def __init__(self, content=(), stop_reason="end_turn", stop_details=None):
         self.content = list(content)
         self.stop_reason = stop_reason
+        # Populated by the API only for a refusal; None otherwise, which main()
+        # relies on when reading the category.
+        self.stop_details = stop_details
 
 
 class _Stream:

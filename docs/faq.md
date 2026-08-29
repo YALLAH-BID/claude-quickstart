@@ -23,7 +23,7 @@ it.
 
 ## What is tested?
 
-Everything except `main`. `merge_blocks`, `collect` and `run` are tested directly;
+Every function. `merge_blocks`, `collect`, `run` and `main` are tested directly;
 `field`, `block_key` and `request` are exercised through them.
 
 `merge_blocks` is pure and carries the branch that has never run against a live
@@ -33,8 +33,12 @@ fake client that returns a scripted sequence of responses — a fake rather than
 mock, since the tests assert on the requests actually sent, not that a mock
 returned what it was told to.
 
-`main` is untested. It is the entry point: it interprets `stop_reason`, prints,
-and exits.
+`main` is tested for what it decides rather than what it orchestrates: which
+message each SDK error produces, that a refusal exits with its category, that
+partial answers are labelled *before* they are printed, and that empty sections
+are omitted. One test asserts the subclass relationships the `except` ordering
+depends on — so if the SDK ever reorganises its exception hierarchy, that
+assumption fails loudly instead of silently.
 
 Note what the tests do and do not settle. They establish that both resume shapes
 are handled correctly. They cannot tell you **which** shape the API actually

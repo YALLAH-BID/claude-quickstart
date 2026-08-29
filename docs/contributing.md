@@ -32,16 +32,13 @@ belongs somewhere else.
 The lint job runs `ruff`. The test job installs dependencies and runs `pytest` on
 three Python versions.
 
-`merge_blocks`, `collect` and `run` are covered — both resume shapes, the HTTP-200
-search-error path, and the continuation cap. `field`, `block_key` and `request`
-are exercised through them.
+Every function in the table above is now covered — both resume shapes, the
+HTTP-200 search-error path, the continuation cap, and the error-handler ordering.
+`field`, `block_key` and `request` are exercised through the others.
 
-**`main` is the only function CI never executes**, since it sits behind
-`if __name__ == "__main__"` and importing the module runs the constants and stops.
-
-So a green tick now means rather more than it did: the logic behaves, on three
-Python versions. What it still cannot tell you is whether any of it works against
-the real API — every test runs on a fake client, and none of them spend money.
+So a green tick means rather more than it did: the logic behaves, on three Python
+versions. What it still cannot tell you is whether any of it works against the
+real API — every test runs against a fake client, and none of them spend money.
 
 ## Verifying by hand
 
@@ -66,8 +63,9 @@ Three paths are difficult or impossible to reach deliberately:
   supported way to force one; see [pause-turn.md](pause-turn.md).
 - **The `MAX_CONTINUATIONS` cap against the real API** — the loop is tested with
   a fake client, but observing it genuinely needs five consecutive pauses.
-- **`stop_reason == "refusal"`** — needs a query the model declines, which is
-  not something to go fishing for.
+- **A real refusal** — the handling is tested with a fake response, but
+  provoking one needs a query the model declines, which is not something to go
+  fishing for.
 
 A change that alters any of these cannot be honestly described as tested. Say so
 in the PR rather than implying otherwise; an accurate "unverified" is worth more
