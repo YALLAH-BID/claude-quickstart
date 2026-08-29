@@ -4,6 +4,9 @@ This is a **quickstart**: one file that shows how to call the Claude Messages AP
 with the server-side web search tool. The small scope is deliberate, and it is the
 main thing to keep in mind before opening a pull request.
 
+This page is the policy. [docs/contributing.md](docs/contributing.md) is the
+practice — how the code is arranged, and how to verify a change when CI cannot.
+
 ## What belongs here
 
 Changes that make the example more correct, clearer, or more current:
