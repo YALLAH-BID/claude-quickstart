@@ -53,7 +53,14 @@ that creates a second execution environment and confuses the model. It requires
 Opus 5/4.8/4.7/4.6 or Sonnet 5/4.6; older models take `web_search_20250305`.
 
 Optional keys this example does not set: `max_uses`, `allowed_domains` /
-`blocked_domains` (never both), `user_location`.
+`blocked_domains` (never both), `user_location`. Filled in, the first looks like:
+
+```python
+TOOLS = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
+```
+
+Worth setting before running this unattended: without it, how many searches a
+single turn performs is decided by Claude rather than by you.
 
 ## Response blocks
 
