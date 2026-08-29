@@ -11,18 +11,14 @@ updates:
     commit-message:
       prefix: ci
 
-  # requirements.txt. Note this is quiet by design: the pin is a range
-  # (anthropic>=1.2.0,<2), so every 1.x release already satisfies it and
-  # Dependabot has nothing to raise until 2.0 ships -- which is exactly the
-  # bump worth a human deciding on.
+  # requirements.txt and requirements-dev.txt. Mixed behaviour worth knowing:
+  # anthropic is a range (>=1.2.0,<2), so every 1.x release already satisfies it
+  # and nothing is raised until 2.0 -- the one bump worth a human deciding on.
+  # ruff is an exact pin, so it will get real update PRs, which is the point of
+  # moving it out of the workflow.
   - package-ecosystem: pip
     directory: /
     schedule:
       interval: monthly
     commit-message:
       prefix: deps
-
-# NOT covered: ruff. It is pinned inline in the workflow as
-# `pip install ruff==0.16.5`, and Dependabot's pip updater only reads
-# dependency files (requirements*.txt, pyproject.toml), not run steps.
-# Moving that pin into a requirements-dev.txt would bring it in scope.

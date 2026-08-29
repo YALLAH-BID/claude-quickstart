@@ -29,12 +29,13 @@ better home for it.
 ```bash
 python -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt   # Linux/macOS: .venv/bin/python
-.venv/Scripts/python -m pip install ruff==0.16.5
+.venv/Scripts/python -m pip install -r requirements-dev.txt
 ```
 
-The pinned version matches CI; an unpinned `ruff` may format differently and fail the
-check. `ruff` is not in `requirements.txt` — that file lists only what the script needs at
-runtime, so people running the example don't install a linter they'll never use.
+`requirements-dev.txt` holds the tooling (`ruff`, pinned). CI installs that same file, so
+the version you run locally is the one that gates your PR. It is kept out of
+`requirements.txt`, which lists only what the script needs at runtime — people running the
+example shouldn't have to install a linter.
 
 ## Before you push
 

@@ -1,0 +1,7 @@
+# Development tooling, kept out of requirements.txt so people just running the
+# example don't install a linter they'll never use.
+#
+# Pinned: an unpinned ruff can change formatting rules in a new release and turn
+# main red with no code change. CI installs this exact file, so the version you
+# run locally is the one that gates your PR.
+ruff==0.16.5
