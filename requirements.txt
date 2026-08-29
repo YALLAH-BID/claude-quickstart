@@ -1,0 +1,4 @@
+# Direct dependency only; everything else in the venv is transitive.
+# Bounded below the next major: 0.x -> 1.x was a breaking change
+# (httpx -> httpx2, Python >= 3.10), so 2.x is assumed breaking too.
+anthropic>=1.2.0,<2

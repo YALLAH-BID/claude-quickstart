@@ -16,10 +16,10 @@ wrong: paused turns, streaming timeouts, and server-tool errors that never raise
 
 ```bash
 python -m venv .venv
-.venv/Scripts/python -m pip install anthropic   # Linux/macOS: .venv/bin/python
+.venv/Scripts/python -m pip install -r requirements.txt   # Linux/macOS: .venv/bin/python
 ```
 
-There is no lockfile — the script depends only on `anthropic` (developed against 1.2.0).
+The only direct dependency is `anthropic` (developed against 1.2.0); everything else in the venv is transitive.
 
 ## Authentication
 
