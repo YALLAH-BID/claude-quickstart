@@ -54,10 +54,12 @@ ruff format --check .
 pytest --cov
 ```
 
-The tests cover `merge_blocks` only, and make no API call — `main()` is guarded by
-`__name__ == "__main__"`, so importing the module runs nothing.
+The tests cover every function and make no API call — `main()` is guarded by
+`__name__ == "__main__"`, so importing the module runs nothing. See
+[docs/testing.md](docs/testing.md).
 
-CI runs the lint on 3.12 and the import on Python 3.10, 3.12, and 3.14.
+CI runs the lint on 3.12 and the tests on Python 3.10, 3.12 and 3.14, failing below
+100% coverage.
 
 ## What CI does not do
 

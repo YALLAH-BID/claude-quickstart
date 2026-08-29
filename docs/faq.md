@@ -6,13 +6,39 @@ with [troubleshooting.md](troubleshooting.md); for what the API does, see
 
 ## Can I use this in production?
 
-No — not as-is. It is an example: one query, no retry policy of its own beyond
-the SDK's, no logging, no persistence, no concurrency. The error handling is
-deliberately explicit so you can see the failure modes, not because it is a
-template for a service.
+No — not as-is. The error handling is deliberately explicit so you can see the
+failure modes, not because it is a template for a service. And the resume path
+has never run against a live paused turn ([pause-turn.md](pause-turn.md)), so
+part of it is unproven against the real API.
 
-Worth being blunt about a second reason: the resume path has never run against a
-live paused turn. See [pause-turn.md](pause-turn.md).
+There is nothing here to *deploy* — no package, no service, no container. The
+useful question is what you would have to add before code shaped like this could
+be. Concretely:
+
+**Credentials.** The script relies on the SDK resolving them from the environment
+or an `ant auth login` profile. Neither belongs in a deployed image: inject a key
+from a secret manager at runtime. Note profile tokens expire, and the failure
+looks identical to never having authenticated at all
+([troubleshooting.md](troubleshooting.md)).
+
+**Cost bounds.** `MAX_TOKENS` and `MAX_CONTINUATIONS` are the only ceilings in the
+file, and they bound one run at six API calls — the initial request plus five
+continuations. The search tool's `max_uses` is *not* set, so how many searches a
+single turn performs is bounded by Claude, not by you. Add it before running this
+anywhere unattended.
+
+**Observability.** There is no logging at all. Nothing records token usage, which
+searches ran, or how many continuations a request consumed — so a run that costs
+more than expected leaves no evidence of why.
+
+**Retry policy.** Entirely the SDK's: two retries and a 600-second read timeout,
+both defaults. There is no circuit breaker, no budget, and no dead-letter path for
+a request that exhausts them.
+
+**The query is not a parameter.** `USER_QUERY` is a module constant read inside
+`request()`, so asking a different question means changing function signatures,
+not editing a value. The "one question, asked once" assumption is structural
+rather than incidental.
 
 ## Why isn't it a package? Why not on PyPI?
 
