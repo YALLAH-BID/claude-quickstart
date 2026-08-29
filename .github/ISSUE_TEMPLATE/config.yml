@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Bug in the anthropic SDK itself
+    url: https://github.com/anthropics/anthropic-sdk-python/issues
+    about: Problems with the anthropic package belong upstream, not in this example.
+  - name: Claude API documentation
+    url: https://platform.claude.com/docs/en/home
+    about: Questions about the API rather than about this example.

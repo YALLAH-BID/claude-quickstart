@@ -1,0 +1,40 @@
+name: pause_turn observation
+description: You triggered a real paused turn — what did the API send back?
+labels: ["pause_turn"]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        This is the one open question in the repo. `merge_blocks()` copes with a
+        resumed turn that is either cumulative (the whole turn so far, re-sent)
+        or incremental (only the new segment) by detecting which it received —
+        correct either way, but nobody has observed which the API actually does.
+        If you have seen a live `pause_turn`, you can settle it.
+
+  - type: dropdown
+    id: shape
+    attributes:
+      label: Which shape did the resumed turn have?
+      options:
+        - Cumulative — it re-sent blocks I already had
+        - Incremental — it sent only new blocks
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Block sequence
+      description: >
+        The `.type` of each content block across both responses is enough —
+        e.g. thinking, server_tool_use, web_search_tool_result, text.
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: claude-opus-5
