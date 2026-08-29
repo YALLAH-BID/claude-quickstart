@@ -1,6 +1,8 @@
 # claude-quickstart
 
 [![CI](https://github.com/YALLAH-BID/claude-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/YALLAH-BID/claude-quickstart/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/YALLAH-BID/claude-quickstart)](LICENSE)
+![Python](https://img.shields.io/github/languages/top/YALLAH-BID/claude-quickstart)
 
 A single-file example of the Claude Messages API using the **server-side web search tool**.
 
