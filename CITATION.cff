@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: If you reference this example, please cite it as below.
+title: claude-quickstart
+abstract: >-
+  A single-file example of the Claude Messages API using the server-side web
+  search tool, covering pause_turn continuation, streaming, and the response
+  states that arrive as HTTP 200 rather than exceptions.
+type: software
+authors:
+  - name: YALLAH-BID
+    alias: YALLAH-BID
+repository-code: https://github.com/YALLAH-BID/claude-quickstart
+url: https://github.com/YALLAH-BID/claude-quickstart
+license: MIT
+date-released: "2026-08-29"
+keywords:
+  - claude
+  - anthropic
+  - claude-api
+  - llm
+  - web-search
