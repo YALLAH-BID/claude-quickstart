@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - run: ruff check .
+      - run: ruff format --check .
+
+  # Verifies the README's "Python 3.10+" claim, and that requirements.txt
+  # still resolves, across the supported range.
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
+
+      # Importing runs the module body but not main(), which is guarded by
+      # __name__ == "__main__". So this needs no credentials and makes no
+      # API call -- CI never spends money. Actually running quickstart.py
+      # is deliberately not a CI step for that reason.
+      - run: python -c "import quickstart"

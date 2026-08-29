@@ -131,9 +131,7 @@ def main():
     # Both of these leave a partial answer worth printing -- but say so first,
     # or truncated output reads as a complete one.
     if response.stop_reason == "pause_turn":
-        print(
-            f"[incomplete: still paused after {MAX_CONTINUATIONS} continuations]\n"
-        )
+        print(f"[incomplete: still paused after {MAX_CONTINUATIONS} continuations]\n")
     elif response.stop_reason == "max_tokens":
         print(f"[truncated: hit the {MAX_TOKENS}-token cap mid-answer]\n")
 
