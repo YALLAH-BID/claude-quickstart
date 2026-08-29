@@ -1,0 +1,15 @@
+# Tool configuration only. This is a single-file example, not a package, so
+# there is deliberately no [project] table -- dependencies live in
+# requirements.txt and requirements-dev.txt, which is what CI and Dependabot
+# read.
+
+[tool.ruff]
+# Both stated explicitly rather than inherited: a future ruff release changing
+# a default would otherwise reformat the file or shift which rules apply.
+line-length = 88
+target-version = "py310"  # the floor claimed in the README and tested in CI
+
+[tool.ruff.lint]
+# Beyond ruff's default (E4/E7/E9 + F): import sorting, modern-syntax upgrades,
+# and bugbear's correctness lints.
+select = ["E", "F", "I", "UP", "B"]
