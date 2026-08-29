@@ -23,33 +23,14 @@ it.
 
 ## What is tested?
 
-Every function. `merge_blocks`, `collect`, `run` and `main` are tested directly;
-`field`, `block_key` and `request` are exercised through them.
+Every function — 52 tests, coverage enforced at 100% in CI, and every test file
+checked by deliberately breaking the code to confirm the tests notice.
 
-`merge_blocks` is pure and carries the branch that has never run against a live
-paused turn. `collect` handles the two shapes a search result can arrive in,
-including the error shape that comes back as HTTP 200. `run` is tested against a
-fake client that returns a scripted sequence of responses — a fake rather than a
-mock, since the tests assert on the requests actually sent, not that a mock
-returned what it was told to.
+[testing.md](testing.md) has the detail: what each file covers, why the stand-ins
+are fakes rather than mocks, and the table of fifteen mutations.
 
-Coverage is 100%, enforced by `fail_under` in CI — the build fails before a drop
-can reach `main`. The README badge is a static image rather than a live
-measurement, which is normally a bad idea; it is honest here only because the
-gate makes it impossible for the number to be an overstatement. The entry-point
-guard is excluded from the measurement, since running it means running the
-program.
-
-`main` is tested for what it decides rather than what it orchestrates: which
-message each SDK error produces, that a refusal exits with its category, that
-partial answers are labelled *before* they are printed, and that empty sections
-are omitted. One test asserts the subclass relationships the `except` ordering
-depends on — so if the SDK ever reorganises its exception hierarchy, that
-assumption fails loudly instead of silently.
-
-Note what the tests do and do not settle. They establish that both resume shapes
-are handled correctly. They cannot tell you **which** shape the API actually
-sends — only a live paused turn does that, and it remains
+What the suite cannot settle is **which** resume shape the API actually sends.
+Every test runs against a fake client, so that remains
 [the open question](pause-turn.md).
 
 ## What does one run cost?

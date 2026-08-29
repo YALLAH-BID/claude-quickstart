@@ -29,16 +29,13 @@ belongs somewhere else.
 
 ## What CI actually proves
 
-The lint job runs `ruff`. The test job installs dependencies and runs
-`pytest --cov` on three Python versions, failing below 100% coverage.
+The lint job runs `ruff`. The test job runs `pytest --cov` on three Python
+versions, failing below 100% coverage. Every function in the table above is
+covered; [testing.md](testing.md) says how.
 
-Every function in the table above is now covered — both resume shapes, the
-HTTP-200 search-error path, the continuation cap, and the error-handler ordering.
-`field`, `block_key` and `request` are exercised through the others.
-
-So a green tick means rather more than it did: the logic behaves, on three Python
-versions. What it still cannot tell you is whether any of it works against the
-real API — every test runs against a fake client, and none of them spend money.
+So a green tick means the logic behaves, on three Python versions. What it still
+cannot tell you is whether any of it works against the real API — every test runs
+against a fake client, and none of them spend money.
 
 ## Verifying by hand
 

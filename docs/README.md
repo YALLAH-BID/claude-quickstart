@@ -14,6 +14,8 @@ to cause.
   repository dwarfs the script
 - [pause-turn.md](pause-turn.md) — paused turns, how resuming works, and the one
   question about this code nobody has answered
+- [testing.md](testing.md) — the suite, the fakes, and the mutation table that
+  backs the coverage number up
 - [troubleshooting.md](troubleshooting.md) — indexed by the message you actually
   saw, including the ones that are not errors
 
