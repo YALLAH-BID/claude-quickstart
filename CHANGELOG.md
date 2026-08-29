@@ -2,8 +2,9 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-There are no releases or version tags — `main` is the only supported state, so
-entries are dated rather than numbered.
+Releases are tagged `vX.Y.Z` and take a version heading here. Anything not yet
+released sits under **Unreleased** — which is currently all of it, since no tag
+has been cut.
 
 **What gets logged here:** changes that alter what someone running the example
 sees or has to understand — the model or tool version it targets, how it handles
@@ -14,10 +15,6 @@ pins. `git log` already covers those, and duplicating them here would bury the
 entries that matter.
 
 ## Unreleased
-
-Nothing yet.
-
-## 2026-08-29
 
 ### Added
 

@@ -12,6 +12,9 @@ authors:
 repository-code: https://github.com/YALLAH-BID/claude-quickstart
 url: https://github.com/YALLAH-BID/claude-quickstart
 license: MIT
+# No `version` field yet: nothing is tagged. On cutting the first release, add
+# `version: X.Y.Z` here and move date-released to that release's date — GitHub
+# reads this file for the "Cite this repository" panel.
 date-released: "2026-08-29"
 keywords:
   - claude

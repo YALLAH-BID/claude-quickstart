@@ -12,7 +12,9 @@ those to [anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-pyth
 
 ## Supported versions
 
-Only the current `main` branch. There are no releases, tags, or backports.
+`main` is always supported, as is the most recent tagged release once one exists
+— there are none yet. There are no backports: a fix lands on `main` and ships in
+the next release.
 
 ## Reporting
 
