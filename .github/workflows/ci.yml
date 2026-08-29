@@ -41,4 +41,6 @@ jobs:
       # main() -- that is guarded by __name__ == "__main__". So they need no
       # credentials and make no API call; CI still never spends money.
       # Actually running quickstart.py is deliberately not a CI step.
-      - run: pytest -q
+      # --cov with no argument uses [tool.coverage.run] source from
+      # pyproject.toml, which also sets fail_under = 100.
+      - run: pytest -q --cov

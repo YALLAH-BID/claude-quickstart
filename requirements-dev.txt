@@ -12,3 +12,6 @@ pre-commit==4.6.2
 
 # Test runner. Only merge_blocks is unit-tested; see docs/faq.md.
 pytest==9.1.1
+
+# Coverage, enforced at 100% in CI so the README badge cannot overstate it.
+pytest-cov==7.1.0

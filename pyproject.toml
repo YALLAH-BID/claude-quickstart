@@ -19,3 +19,15 @@ select = ["E", "F", "I", "UP", "B"]
 # root on sys.path to `import quickstart`.
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["quickstart"]
+
+[tool.coverage.report]
+# The entry-point guard cannot run under test -- executing it means running the
+# program. Excluding it is what makes 100% an honest target rather than a line
+# nobody can ever reach.
+exclude_also = ['if __name__ == "__main__":']
+# Enforced in CI, so the README badge cannot silently overstate coverage: if it
+# drops below this, the build fails before anyone sees a stale number.
+fail_under = 100

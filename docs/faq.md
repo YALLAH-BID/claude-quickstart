@@ -33,6 +33,13 @@ fake client that returns a scripted sequence of responses — a fake rather than
 mock, since the tests assert on the requests actually sent, not that a mock
 returned what it was told to.
 
+Coverage is 100%, enforced by `fail_under` in CI — the build fails before a drop
+can reach `main`. The README badge is a static image rather than a live
+measurement, which is normally a bad idea; it is honest here only because the
+gate makes it impossible for the number to be an overstatement. The entry-point
+guard is excluded from the measurement, since running it means running the
+program.
+
 `main` is tested for what it decides rather than what it orchestrates: which
 message each SDK error produces, that a refusal exits with its category, that
 partial answers are labelled *before* they are printed, and that empty sections

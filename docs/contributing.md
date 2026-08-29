@@ -29,8 +29,8 @@ belongs somewhere else.
 
 ## What CI actually proves
 
-The lint job runs `ruff`. The test job installs dependencies and runs `pytest` on
-three Python versions.
+The lint job runs `ruff`. The test job installs dependencies and runs
+`pytest --cov` on three Python versions, failing below 100% coverage.
 
 Every function in the table above is now covered — both resume shapes, the
 HTTP-200 search-error path, the continuation cap, and the error-handler ordering.

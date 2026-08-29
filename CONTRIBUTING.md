@@ -51,7 +51,7 @@ CI runs exactly these, so running them locally first saves a round trip:
 ```bash
 ruff check .
 ruff format --check .
-pytest
+pytest --cov
 ```
 
 The tests cover `merge_blocks` only, and make no API call — `main()` is guarded by
