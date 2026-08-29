@@ -30,9 +30,10 @@ better home for it.
 python -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt   # Linux/macOS: .venv/bin/python
 .venv/Scripts/python -m pip install -r requirements-dev.txt
+.venv/Scripts/python -m pre_commit install   # optional, but runs the checks below on every commit
 ```
 
-`requirements-dev.txt` holds the tooling (`ruff`, pinned). CI installs that same file, so
+`requirements-dev.txt` holds the tooling (`ruff` and `pre-commit`, both pinned). CI installs that same file, so
 the version you run locally is the one that gates your PR. It is kept out of
 `requirements.txt`, which lists only what the script needs at runtime — people running the
 example shouldn't have to install a linter.

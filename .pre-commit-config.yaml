@@ -1,0 +1,21 @@
+# Mirrors the CI lint job so failures surface before the push, not after.
+# Enable once per clone:  pre-commit install
+#
+# The ruff rev below must match the pin in requirements-dev.txt. They are
+# separate on purpose: pre-commit installs its own isolated copy, which is what
+# lets the hooks run from GUI clients like GitHub Desktop, where the project
+# venv is not on PATH. Bump both together -- `pre-commit autoupdate` moves this
+# file, and Dependabot has no pre-commit ecosystem to move it for you.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.5
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml

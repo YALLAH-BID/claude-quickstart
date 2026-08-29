@@ -5,3 +5,7 @@
 # main red with no code change. CI installs this exact file, so the version you
 # run locally is the one that gates your PR.
 ruff==0.16.5
+
+# Also installed in CI (a few wasted seconds) so this file stays the single
+# list of dev tooling rather than splitting across two.
+pre-commit==4.6.2
