@@ -118,3 +118,7 @@ or only the new segment (incremental). It detects which by checking whether the 
 re-sends blocks already held, so it is correct either way — but the actual behaviour has not
 been observed against a live paused turn. If you reproduce one, the detection branch is worth
 confirming.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
