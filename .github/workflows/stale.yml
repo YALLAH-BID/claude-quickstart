@@ -1,0 +1,44 @@
+name: Stale
+
+on:
+  schedule:
+    # Mondays, off the hour -- GitHub's scheduled queue is congested at :00 and
+    # runs get delayed.
+    - cron: "17 3 * * 1"
+  workflow_dispatch:  # so it can be exercised without waiting a week
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v11
+        with:
+          days-before-stale: 60
+          days-before-close: 14
+
+          # pause_turn is exempt deliberately. A live paused-turn report is the
+          # one open question in this repo, and such an issue may sit untouched
+          # for months because confirming it needs API credits -- not because it
+          # stopped mattering. Auto-closing it would discard precisely what the
+          # issue form asks people to send.
+          exempt-issue-labels: "pause_turn,help wanted,good first issue"
+          exempt-all-milestones: true
+
+          stale-issue-message: >
+            No activity here for 60 days, so this is marked stale and will close
+            in 14 more. A single comment keeps it open. This is an inactivity
+            timer, not a judgement on whether the issue is valid.
+          close-issue-message: >
+            Closing after 74 days without activity. Comment to reopen -- closed
+            is not the same as rejected.
+
+          stale-pr-message: >
+            No activity for 60 days, so this is marked stale and will close in
+            14 more. A comment or a push keeps it open.
+          close-pr-message: >
+            Closing after 74 days without activity. Reopen whenever you want to
+            pick it back up.
