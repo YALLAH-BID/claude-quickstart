@@ -117,11 +117,12 @@ restrict sources. For cost/quality tuning, `output_config={"effort": "low"|"medi
 
 ## Known limitation
 
-`merge_blocks()` handles a resumed turn that returns either the whole turn so far (cumulative)
-or only the new segment (incremental). It detects which by checking whether the new content
-re-sends blocks already held, so it is correct either way — but the actual behaviour has not
-been observed against a live paused turn. If you reproduce one, the detection branch is worth
-confirming.
+`merge_blocks()` copes with a resumed turn whether the API re-sends the whole turn so
+far or only the new segment, by detecting which it received — correct either way. Which
+one actually happens has never been observed against a live paused turn.
+
+[docs/pause-turn.md](docs/pause-turn.md) covers it in full: why it matters, how the
+detection works, and what evidence would settle it.
 
 ## License
 

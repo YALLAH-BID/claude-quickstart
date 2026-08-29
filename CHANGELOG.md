@@ -29,4 +29,5 @@ entries that matter.
 - `merge_blocks()` copes with a resumed turn that is either cumulative (the whole
   turn so far, re-sent) or incremental (only the new segment) by detecting which
   it received, so it is correct either way. Which shape the API actually returns
-  has never been observed against a live paused turn.
+  has never been observed against a live paused turn — see
+  [docs/pause-turn.md](docs/pause-turn.md).

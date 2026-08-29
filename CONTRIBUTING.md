@@ -65,10 +65,7 @@ means the code parses and imports, nothing more.
 
 ## A known open question
 
-`merge_blocks()` handles a resumed turn that returns either the whole turn so far
-(cumulative) or only the new segment (incremental). It detects which by checking
-whether the new content re-sends blocks already held, so it is correct either way —
-but the real behaviour has never been observed against a live paused turn.
+If you trigger a genuine `pause_turn` and can say which shape the API returns, that is
+the single most useful contribution to this repo right now.
 
-If you manage to trigger a genuine `pause_turn` and can say which shape the API
-returns, that is the single most useful contribution to this repo right now.
+[docs/pause-turn.md](docs/pause-turn.md) explains what to look for and what to record.
