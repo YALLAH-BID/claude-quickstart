@@ -92,6 +92,26 @@ prompted securely — `-Connections`, `-Permissions`, `-Lineage`, `-Out`, `-Time
 variables are honored, and it writes the same `site_inventory.json` and `report.md` with the same
 exit-code behavior.
 
+## 2c. Option A (locked-down Windows) — browser console
+
+If the machine blocks PowerShell as well (group policy, AppLocker), use
+`tools/tableau_deep_dig_browser.js`. It runs in the browser you already sign in to
+Tableau with, so there is no program to install or launch — and because it runs on the
+Tableau page itself, its REST calls are same-origin and need no proxy or CORS setup.
+
+1. Open any page of the site in the browser, e.g. `http://your-tableau-server/#/site/Automotive/home`.
+2. Press **F12**, open the **Console** tab. If it refuses a paste, type `allow pasting`
+   and press Enter first (a browser anti-self-XSS guard).
+3. Paste the whole script, press Enter.
+4. It asks for the Personal Access Token **name**, then its **secret** — credentials are
+   never embedded in the pasted text.
+5. It downloads `report.md` and `site_inventory.json`, the same outputs as the other two
+   versions.
+
+It reads the same endpoints with the same graceful degradation (sections the account
+cannot see are recorded as errors and the dig continues), and the site is taken from the
+`/site/<name>/` segment of the page URL.
+
 ## 3. Option B — run Claude Code inside the network
 
 For a live, interactive dig, install Claude Code on a machine that can reach the server — use the
