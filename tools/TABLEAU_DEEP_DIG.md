@@ -75,6 +75,23 @@ On Windows, substitute `python` (or `py`) for `python3` in the commands above.
 The script exits 0 even when individual sections fail (failures are recorded in the report and
 JSON); it exits nonzero only when sign-in itself fails or no auth method was provided.
 
+## 2b. Option A (Windows, zero installs) — PowerShell
+
+If the machine inside the network is a corporate Windows box without Python, use the PowerShell
+port `tools/tableau_deep_dig.ps1` instead — it needs **nothing installed**: it runs on the stock
+Windows PowerShell 5.1 that ships with every Windows 10/11 machine (and on PowerShell 7), using
+only built-in .NET features.
+
+```bat
+powershell -ExecutionPolicy Bypass -File tableau_deep_dig.ps1 -Server http://your-tableau-server -Site Automotive -PatName my-token-name -PatSecret my-token-secret
+```
+
+Flags mirror the Python version one-for-one (`-User`/`-Password` — omit `-Password` to be
+prompted securely — `-Connections`, `-Permissions`, `-Lineage`, `-Out`, `-TimeoutSec`,
+`-PageSize`, `-ApiVersion`, `-Insecure`, `-UseEnvProxy`), the same `TABLEAU_*` environment
+variables are honored, and it writes the same `site_inventory.json` and `report.md` with the same
+exit-code behavior.
+
 ## 3. Option B — run Claude Code inside the network
 
 For a live, interactive dig, install Claude Code on a machine that can reach the server — use the
