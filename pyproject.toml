@@ -14,6 +14,11 @@ target-version = "py310"  # the floor claimed in the README and tested in CI
 # and bugbear's correctness lints.
 select = ["E", "F", "I", "UP", "B"]
 
+[tool.ruff.lint.per-file-ignores]
+# The report generator embeds long Excel formula strings that cannot be split
+# without corrupting the formulas; every other rule still applies to it.
+"stock_report/pipeline.py" = ["E501"]
+
 [tool.pytest.ini_options]
 # The example is a top-level script, not a package, so tests/ needs the repo
 # root on sys.path to `import quickstart`.
