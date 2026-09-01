@@ -112,6 +112,27 @@ It reads the same endpoints with the same graceful degradation (sections the acc
 cannot see are recorded as errors and the dig continues), and the site is taken from the
 `/site/<name>/` segment of the page URL.
 
+## 2d. Option A (deeper dig) — browser console v2
+
+`tools/tableau_deep_dig_browser_v2.js` is a second-pass, still read-only browser script
+that answers "what feeds all this?" It runs the same way (paste into the console, enter the
+token name and secret) and writes `report_v2.md` and `site_inventory_v2.json`. On top of the
+base inventory it adds, for each item the account may read:
+
+- **Connections** — per workbook and data source: upstream server address, connection type
+  and connection user (never passwords), plus a flag for connections that embed credentials.
+- **Revision history** — who published each version of each workbook and when.
+- **Lineage** — a read-only Metadata API (GraphQL) query mapping workbooks to their upstream
+  databases and tables (needs the Metadata API enabled; degrades to an error line if not).
+- **Workbook internals** — downloads each workbook definition and parses it in the browser
+  for custom SQL, calculated-field formulas, embedded connections and sheet/dashboard counts.
+  The `.twbx`/`.twb` unzip and XML parse happen entirely client-side; anything the account
+  cannot download is recorded as a 403 and skipped.
+
+Everything is same-origin and read-only, credentials/token never reach the output files, and
+the GraphQL call is a query (no mutation). Sections needing site-admin rights (users, groups,
+schedules, subscriptions) still record as 403 under a Viewer token and the run continues.
+
 ## 3. Option B — run Claude Code inside the network
 
 For a live, interactive dig, install Claude Code on a machine that can reach the server — use the
