@@ -520,28 +520,49 @@ def build_analysis(data, recon, out_path, asof):
 
     # ---- field-order block used by OVERVIEW + RECONCILIATION
     def field_note(label):
-        c = recon["counts"].get(label, 0)
-        return {
-            "Age (days)": "Raw file aged as of a different day",
-            "Prep %": "Constant value copied down the raw column"
-            if c > 100
-            else "Differs between files",
-            "GM": "Stale value copied down much of the raw column"
-            if c > 100
-            else "Differs between files",
-            "Buyer": "Raw buyer column corrupt (copy-down)"
-            if c > 100
-            else "Differs between files",
-            "GM %": "Stale value copied down much of the raw column"
-            if c > 100
-            else "Differs between files",
-            "Prep Cost": "Raw file behind actual prep charges",
-            "RSP incl VAT": "Mostly VAT added to margin-scheme vehicles (stocklist is correct)",
-            "Datum / Purchase Price": "Incl. zeros and large corrections",
-            "Vehicle Usage": "LCV in stocklist coded LV in raw file",
-            "KM": "Minor mileage corrections",
-            "Availability": "Different status wording between files",
-        }.get(label, "")
+        """Describe a field's differences from the data, not from a fixed script.
+
+        The shape of these differences changes between exports (a column that is
+        copy-down corrupt one day may simply be missing the next), so a hardcoded
+        sentence goes stale and misreports. Everything below is measured.
+        """
+        sub = [x for x in recon["rows"] if x[3] == label]
+        n = len(sub)
+        if not n:
+            return "No differences"
+        if label == "Age (days)":
+            return "Raw file computed age as of a different day"
+        if label == "Vehicle Usage":
+            return "Same category, different code (LCV in stocklist, LV in raw file)"
+        if label == "Availability":
+            return "Different status wording between the files"
+        raw_blank = sum(1 for x in sub if x[5] in (None, "", "-"))
+        if label == "RSP incl VAT":
+            vat = sum(1 for x in sub if "VAT added" in x[8])
+            parts = []
+            if raw_blank:
+                parts.append(f"Raw file has no price on {raw_blank} of {n} rows")
+            if vat:
+                parts.append(
+                    f"{vat} are the margin-scheme VAT case (raw = stocklist x 1.05)"
+                )
+            return "; ".join(parts) if parts else "Differs between the files"
+        seen = Counter(
+            round(x[5], 4) if isinstance(x[5], (int, float)) else x[5] for x in sub
+        )
+        value, hits = seen.most_common(1)[0]
+        if hits == n and n > 25:
+            return f"Raw column holds the single value {value!r} on all {n} rows (copy-down error)"
+        if raw_blank == n:
+            return f"Raw file has no value on any of the {n} rows"
+        if raw_blank > n / 2:
+            return f"Raw file has no value on {raw_blank} of {n} rows"
+        if raw_blank:
+            return (
+                f"Differs between the files; raw file has no value on "
+                f"{raw_blank} of {n} rows"
+            )
+        return "Differs between the files"
 
     field_order = sorted(RECON_FIELDS, key=lambda f: -recon["counts"].get(f[0], 0))
     field_order = [f[0] for f in field_order]
