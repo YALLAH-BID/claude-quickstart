@@ -8,6 +8,8 @@ to cause.
 
 - [api-reference.md](api-reference.md) — the Claude API surface this example
   touches, and the behaviours it depends on
+- [claude-code-desktop-setup.md](claude-code-desktop-setup.md) — installing
+  Claude Code on a corporate Windows laptop: proxy, sign-in, and where data goes
 - [contributing.md](contributing.md) — how the code is arranged, what CI does and
   does not prove, and how to verify a change by hand
 - [faq.md](faq.md) — production readiness, cost, swapping the model, and why the
