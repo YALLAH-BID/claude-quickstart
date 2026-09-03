@@ -10,6 +10,7 @@ Three unrelated things share the repo. Work out which one you are touching befor
 |---|---|
 | `quickstart.py`, `tests/`, `docs/` | The actual project: a ~157-line Claude Messages API example using the server-side `web_search_20260209` tool. Scope is tightly policed (see below). |
 | `stock_report/pipeline.py` | Standalone daily used-vehicle stock pipeline (two Excel exports in, two workbooks out). `openpyxl` only, no tests. |
+| `pricing/` | Live-market check for used-car appraisals: `market_check.py` (stdlib only, no network) turns listings copied from public UAE classifieds into one `market_ref` and compares it with the Autorola median; `trim_aliases.json` maps seller trim names to GCC grades. Only make/model/year/trim ever go to a search engine. Tests in `tests/test_market_check.py`. |
 | `tools/tableau_deep_dig*` | Four ports of one Tableau Server site-audit tool: Python, PowerShell, and two browser-console variants. Run inside a corporate network; only the generated `report.md` / `site_inventory.json` come back out. |
 
 `ruff` lints the whole repo. `pytest --cov` only covers `quickstart.py` — `[tool.coverage.run] source = ["quickstart"]`.

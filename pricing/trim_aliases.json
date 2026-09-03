@@ -1,0 +1,24 @@
+{
+  "Mazda CX-5": {
+    "Sports Plus": ["Sport Plus", "Carbon Edition", "Full Option", "Full Options", "Black Edition", "Luxury"],
+    "Signature": ["Signature Edition"],
+    "Trend Plus": ["Trend"],
+    "GT": ["GT AWD"],
+    "GS": [],
+    "GL": ["Standard"]
+  },
+  "Nissan Patrol": {
+    "SE Platinum": ["Platinum City", "SE Platinum City"],
+    "LE Platinum": ["LE Platinum City", "Platinum LE"],
+    "XE": [],
+    "SE": [],
+    "LE": [],
+    "Titanium": ["SE Titanium", "LE Titanium"]
+  },
+  "Toyota Land Cruiser": {
+    "GXR": ["GX-R", "GXR Twin Turbo"],
+    "VXR": ["VX-R", "VXR Twin Turbo"],
+    "GX": [],
+    "VX": []
+  }
+}
