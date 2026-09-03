@@ -1,0 +1,12 @@
+[
+  {"source": "Dubizzle", "year": 2025, "trim": "Sports Plus", "km": 16183, "price": 110000, "spec": "GCC Specs", "seller": "Dubizzle Cars"},
+  {"source": "Dubizzle", "year": 2025, "trim": "Sports Plus", "km": 12270, "price": 115000, "spec": "GCC Specs", "seller": "Dubizzle Cars"},
+  {"source": "Dubizzle", "year": 2025, "trim": "Sports Plus", "km": 12270, "price": 123000, "spec": "GCC Specs", "seller": "Dubizzle Cars", "note": "featured listing of the same car, earlier price"},
+  {"source": "CarSwitch", "year": 2025, "trim": "2.5L I4", "km": 5000, "price": 110000, "spec": "GCC"},
+  {"source": "CarSwitch", "year": 2025, "trim": "2.5L I4", "km": 12300, "price": 115000, "spec": "GCC"},
+  {"source": "Kavak", "year": 2025, "trim": "2.5 Signature Auto 4WD", "km": 7498, "price": 107999, "spec": "GCC"},
+  {"source": "Dubizzle", "year": 2025, "trim": "Trend Plus", "km": 4690, "price": 105000, "spec": "GCC Specs"},
+  {"source": "Dubizzle", "year": 2025, "trim": "GT", "km": 8568, "price": 89999, "spec": "GCC Specs"},
+  {"source": "Dubizzle", "year": 2024, "trim": "Full Options Carbon Edition", "km": 26000, "price": 67000, "spec": "American Specs"},
+  {"source": "YallaMotor", "year": 2024, "trim": "Full Option (sports plus) black edition", "km": null, "price": 120000, "spec": "GCC", "seller": "Private"}
+]
